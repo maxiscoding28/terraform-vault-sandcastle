@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Create vault user
+useradd vault
+groupadd vault
+usermod -aG vault vault
+usermod -aG wheel vault
+echo 'vault ALL=(ALL:ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers
+mkdir -p /home/vault
+chown vault:vault /home/vault
+mkdir -p /home/vault/.ssh
+chown vault:vault /home/vault/.ssh
+chmod 700 /home/vault/.ssh
+cp -R /home/ec2-user/.ssh/authorized_keys /home/vault/.ssh/authorized_keys
+chown vault:vault /home/vault/.ssh/authorized_keys
+chmod 700 /home/vault/.ssh/authorized_keys
+
 # Install Vault
 curl --silent -Lo /tmp/vault.zip https://releases.hashicorp.com/vault/${vault_version}/vault_${vault_version}_linux_amd64.zip
 unzip /tmp/vault.zip
@@ -8,6 +23,7 @@ rm -f /tmp/vault.zip
 
 # Create raft directory
 mkdir /opt/vault/
+chown vault:vault /opt/vault
 
 # Create config
 mkdir /etc/vault.d
@@ -46,8 +62,8 @@ StartLimitBurst=3
 
 [Service]
 Type=notify
-User=root
-Group=root
+User=vault
+Group=vault
 ProtectSystem=full
 ProtectHome=read-only
 PrivateTmp=yes
