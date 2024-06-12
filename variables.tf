@@ -23,7 +23,7 @@ variable "bootstrap_vault" {
 }
 variable "vault_version" {
   type    = string
-  default = "1.16.0"
+  default = "1.16.0+ent"
 }
 variable "vault_license" {
   type    = string
@@ -40,4 +40,16 @@ variable "max_size" {
 variable "min_size" {
   type    = number
   default = 0
+}
+variable "create_load_balancer" {
+  type    = bool
+  default = false
+}
+variable "create_secondary_cluster" {
+  type    = bool
+  default = false
+}
+variable "enable_consul_storage_mode" {
+  type    = bool
+  default = false
 }

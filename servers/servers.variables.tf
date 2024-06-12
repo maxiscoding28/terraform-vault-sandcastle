@@ -53,3 +53,15 @@ variable "iam_instance_profile" {
 variable "kms_key_arn" {
   type = string
 }
+variable "target_group_arns" {
+  type    = list(string)
+  default = []
+}
+variable "create_secondary_cluster" {
+  type    = bool
+  default = false
+}
+variable "server_name" {
+  type    = list(string)
+  default = ["primary", "secondary"]
+}

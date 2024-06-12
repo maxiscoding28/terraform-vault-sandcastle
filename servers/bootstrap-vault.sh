@@ -40,7 +40,7 @@ listener "tcp" {
 storage "raft" {
   path = "/opt/vault/"
   retry_join {
-    auto_join = "provider=aws tag_key=Name tag_value=vault_sandcastle"
+    auto_join = "provider=aws tag_key=Name tag_value=vault_sandcastle_${server_name}"
     auto_join_scheme = "http"
   }
 }

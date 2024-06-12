@@ -9,3 +9,10 @@ variable "vault_cluster_port" {
   type    = number
   default = 8201
 }
+variable "load_balancer_port" {
+  type    = number
+  default = 80
+}
+variable "create_load_balancer" {
+  type = bool
+}
