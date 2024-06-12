@@ -36,14 +36,20 @@ variable "vpc_zone_identifier" {
   type = list(string)
 }
 variable "desired_capacity" {
-  type = number
+  type    = number
   default = 1
 }
 variable "max_size" {
-  type = number
+  type    = number
   default = 5
 }
 variable "min_size" {
-  type = number
+  type    = number
   default = 0
+}
+variable "iam_instance_profile" {
+  type = string
+}
+variable "kms_key_arn" {
+  type = string
 }

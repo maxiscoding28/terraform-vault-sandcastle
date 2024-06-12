@@ -7,5 +7,5 @@ variable "vault_api_port" {
 }
 variable "vault_cluster_port" {
   type    = number
-  default = 8200
+  default = 8201
 }

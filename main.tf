@@ -6,10 +6,20 @@ module "security" {
   network_vpc_id = module.network.vpc_id
 }
 module "servers" {
-  source              = "./servers"
-  security_group_id   = module.security.security_group_id
-  vpc_zone_identifier = module.network.subnets
-  ec2_key_pair_name   = var.ec2_key_pair_name
-  desired_capacity    = var.desired_capacity
-  bootstrap_vault     = var.bootstrap_vault
+  source               = "./servers"
+  security_group_id    = module.security.security_group_id
+  vpc_zone_identifier  = module.network.subnets
+  ec2_key_pair_name    = var.ec2_key_pair_name
+  desired_capacity     = var.desired_capacity
+  bootstrap_vault      = var.bootstrap_vault
+  iam_instance_profile = module.iam.iam_instance_profile_id
+  kms_key_arn          = module.kms.kms_arn
+
+}
+module "kms" {
+  source = "./kms"
+}
+module "iam" {
+  source      = "./iam"
+  kms_key_arn = module.kms.kms_arn
 }
