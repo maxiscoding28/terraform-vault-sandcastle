@@ -1,6 +1,7 @@
 # Vault Sandcastle
+<p align="center">
 <img src="./logo.png">
-
+</p>
 ## Quick Start
   - ### Prequisites:
     - Ensure you have credentials for an admin-like AWS user in the terminal shell where you will be running Terraform apply.
