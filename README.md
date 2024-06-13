@@ -9,7 +9,8 @@
     - Run `aws sts get-caller-identity` to verify your AWS identity.
 
   - **Step 1**
-    - From the project's root directory, run `terraform apply`
+    - From the project's root directory run `terraform init`.
+    - Run `terraform apply`
     - Type `yes` and hit enter.
     - Retrieve the Public DNS name for the created EC2 instance:
       - _Via web ui:_ Navigate to EC2 page, select instance, copy the value for `Public IPv4 DNS`
