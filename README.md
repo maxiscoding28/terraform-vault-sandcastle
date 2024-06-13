@@ -113,10 +113,6 @@
 | <a name="module_security"></a> [security](#module\_security) | ./security | n/a |
 | <a name="module_servers"></a> [servers](#module\_servers) | ./servers | n/a |
 
-## Resources
-
-No resources.
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
