@@ -2,17 +2,20 @@ resource "aws_vpc" "vault_sandcastle" {
   cidr_block           = var.vpc_cidr_block
   enable_dns_hostnames = var.enable_dns_hostnames
 }
+data "external" "get_aws_region" {
+  program = ["bash", "${path.module}/get_aws_region.sh"]
+}
 resource "aws_subnet" "vault_sandcastle_a" {
   vpc_id                  = aws_vpc.vault_sandcastle.id
   cidr_block              = var.subnet_a_cidr_block
   map_public_ip_on_launch = var.map_public_ip_on_launch
-  availability_zone       = "us-west-2a"
+  availability_zone       = "${data.external.get_aws_region.result.region}a"
 }
 resource "aws_subnet" "vault_sandcastle_b" {
   vpc_id                  = aws_vpc.vault_sandcastle.id
   cidr_block              = var.subnet_b_cidr_block
   map_public_ip_on_launch = var.map_public_ip_on_launch
-  availability_zone       = "us-west-2b"
+  availability_zone       = "${data.external.get_aws_region.result.region}b"
 
 }
 resource "aws_route_table_association" "vault_sandcastle_a" {
