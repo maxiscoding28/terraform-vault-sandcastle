@@ -27,7 +27,7 @@ resource "aws_internet_gateway" "vault_sandcastle" {
   vpc_id = aws_vpc.vault_sandcastle.id
 }
 resource "aws_route" "vault_sandcastle" {
-  route_table_id            = aws_vpc.vault_sandcastle.main_route_table_id
-  destination_cidr_block    = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.vault_sandcastle.id
+  route_table_id         = aws_vpc.vault_sandcastle.main_route_table_id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.vault_sandcastle.id
 }

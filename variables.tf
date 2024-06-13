@@ -1,3 +1,91 @@
+variable "vpc_cidr_block" {
+  type    = string
+  default = "10.0.0.0/16"
+}
+variable "enable_dns_hostnames" {
+  type    = bool
+  default = true
+}
+variable "subnet_a_cidr_block" {
+  type    = string
+  default = "10.0.1.0/24"
+}
+variable "subnet_b_cidr_block" {
+  type    = string
+  default = "10.0.2.0/24"
+}
+variable "map_public_ip_on_launch" {
+  type    = bool
+  default = true
+}
+variable "kms_key_arn" {
+  type    = string
+  default = "*"
+}
+variable "deletion_window_in_days" {
+  type    = number
+  default = 7
+}
+variable "load_balancer_type" {
+  type    = string
+  default = "application"
+}
+variable "subnets" {
+  type    = list(string)
+  default = []
+}
+variable "security_groups" {
+  type    = list(string)
+  default = []
+}
+variable "target_group_port" {
+  type    = string
+  default = "8200"
+}
+variable "target_group_protocol" {
+  type    = string
+  default = "HTTP"
+}
+variable "target_group_health_check_path" {
+  type    = string
+  default = "/v1/sys/health"
+}
+variable "target_group_health_check_codes" {
+  type    = string
+  default = "200,473"
+}
+variable "vpc_id" {
+  type    = string
+  default = ""
+}
+variable "listener_port" {
+  type    = string
+  default = "80"
+}
+variable "listener_protocol" {
+  type    = string
+  default = ""
+}
+variable "create_secondary_cluster" {
+  type    = bool
+  default = false
+}
+variable "vault_api_port" {
+  type    = number
+  default = 8200
+}
+variable "vault_cluster_port" {
+  type    = number
+  default = 8201
+}
+variable "load_balancer_port" {
+  type    = number
+  default = 80
+}
+variable "create_load_balancer" {
+  type    = bool
+  default = false
+}
 variable "most_recent_ami" {
   type    = bool
   default = true
@@ -15,7 +103,8 @@ variable "instance_type" {
   default = "t2.micro"
 }
 variable "ec2_key_pair_name" {
-  type = string
+  type    = string
+  default = ""
 }
 variable "bootstrap_vault" {
   type    = bool
@@ -23,7 +112,7 @@ variable "bootstrap_vault" {
 }
 variable "vault_version" {
   type    = string
-  default = "1.16.0+ent"
+  default = "1.16.0"
 }
 variable "vault_license" {
   type    = string
@@ -41,15 +130,11 @@ variable "min_size" {
   type    = number
   default = 0
 }
-variable "create_load_balancer" {
-  type    = bool
-  default = false
+variable "target_group_arns" {
+  type    = list(string)
+  default = []
 }
-variable "create_secondary_cluster" {
-  type    = bool
-  default = false
-}
-variable "enable_consul_storage_mode" {
-  type    = bool
-  default = false
+variable "server_name" {
+  type    = list(string)
+  default = ["primary", "secondary"]
 }

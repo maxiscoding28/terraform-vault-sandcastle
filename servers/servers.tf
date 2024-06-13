@@ -17,7 +17,7 @@ resource "aws_launch_template" "vault_sandcastle" {
     vault_version = var.vault_version
     vault_license = var.vault_license
     kms_key_arn   = var.kms_key_arn
-    server_name = var.server_name[count.index]
+    server_name   = var.server_name[count.index]
   }))
 }
 resource "aws_autoscaling_group" "vault_sandcastle" {
@@ -26,7 +26,7 @@ resource "aws_autoscaling_group" "vault_sandcastle" {
   desired_capacity    = var.desired_capacity
   max_size            = var.max_size
   min_size            = var.min_size
-  target_group_arns = [var.target_group_arns[count.index]]
+  target_group_arns   = length(var.target_group_arns) == 0 ? [] : [var.target_group_arns[count.index]]
   launch_template {
     id      = aws_launch_template.vault_sandcastle[count.index].id
     version = "$Latest"
