@@ -15,9 +15,6 @@
         --output table \
         --query 'sort_by(Reservations[].Instances[].{NAME: Tags[?Key==`Name`].Value | [0], "DNS NAME": PublicDnsName, "INSTANCE ID": InstanceId}, &NAME)'
         ```
-  tf apply
-  provision single server
-
 - SSH-ing
    add ec2-key-pair variable
 
