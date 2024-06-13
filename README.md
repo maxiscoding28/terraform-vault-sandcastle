@@ -1,6 +1,6 @@
 # Vault Sandcastle
 <p align="center">
-<img src="./logo.png">
+<img src="https://github.com/maxiscoding28/terraform-vault-sandcastle/blob/main/logo.png">
 </p>
 
 ## Quick Start
