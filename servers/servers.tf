@@ -13,12 +13,12 @@ resource "aws_launch_template" "vault_sandcastle" {
   key_name               = var.ec2_key_pair_name
   vpc_security_group_ids = [var.security_group_id]
   iam_instance_profile { name = var.iam_instance_profile }
-  user_data = base64encode(templatefile("${path.module}/bootstrap-vault.sh", {
+  user_data = var.bootstrap_vault ? (templatefile("${path.module}/bootstrap-vault.sh", {
     vault_version = var.vault_version
     vault_license = var.vault_license
     kms_key_arn   = var.kms_key_arn
     server_name   = var.server_name[count.index]
-  }))
+  })) : null
 }
 resource "aws_autoscaling_group" "vault_sandcastle" {
   count               = var.create_secondary_cluster ? 2 : 1
