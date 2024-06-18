@@ -27,6 +27,7 @@ chown vault:vault /opt/vault
 
 # Create config
 mkdir /etc/vault.d
+chown vault:vault /opt/vault
 
 # Create license file
 echo ${vault_license} > /etc/vault.d/license.hclic
