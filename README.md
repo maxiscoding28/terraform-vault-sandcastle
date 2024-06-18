@@ -15,7 +15,7 @@
     - Retrieve the Public DNS name for the created EC2 instance:
       - _Via web ui:_ Navigate to EC2 page, select instance, copy the value for `Public IPv4 DNS`
       - _Via aws cli_: run the following command and copy the value for `DNS NAME`:
-        ```sh
+        ```
         aws ec2 describe-instances \
         --filter Name=instance-state-name,Values=running \
         --output table \
