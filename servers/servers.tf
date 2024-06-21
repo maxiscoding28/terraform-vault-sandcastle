@@ -13,11 +13,17 @@ resource "aws_launch_template" "vault_sandcastle" {
   key_name               = var.ec2_key_pair_name
   vpc_security_group_ids = [var.security_group_id]
   iam_instance_profile { name = var.iam_instance_profile }
-  user_data = var.bootstrap_vault ? base64encode(templatefile("${path.module}/bootstrap-vault.sh", {
+  user_data = var.bootstrap_vault && ! var.consul_mode ? base64encode(templatefile("${path.module}/bootstrap-vault.sh", {
     vault_version = var.vault_version
     vault_license = var.vault_license
     kms_key_arn   = var.kms_key_arn
     server_name   = var.server_name[count.index]
+  })) : var.bootstrap_vault && var.consul_mode ? base64encode(templatefile("${path.module}/bootstrap-vault-consul.sh", {
+    vault_version = var.vault_version
+    vault_license = var.vault_license
+    kms_key_arn   = var.kms_key_arn
+    server_name   = var.server_name[count.index]
+    consul_version = var.consul_version
   })) : null
 }
 resource "aws_autoscaling_group" "vault_sandcastle" {
@@ -34,6 +40,16 @@ resource "aws_autoscaling_group" "vault_sandcastle" {
   tag {
     key                 = "Name"
     value               = "vault_sandcastle_${var.server_name[count.index]}"
+    propagate_at_launch = true
+  }
+}
+
+resource "aws_autoscaling_group_tag" "vault_sandcastle" {
+  count = var.consul_mode ? 1 : 0
+  autoscaling_group_name = aws_autoscaling_group.vault_sandcastle[0].name
+  tag {
+    key = "join"
+    value = "consul-primary"
     propagate_at_launch = true
   }
 }

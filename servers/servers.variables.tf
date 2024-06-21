@@ -16,3 +16,5 @@ variable "kms_key_arn" { type = string }
 variable "target_group_arns" { type = list(string) }
 variable "create_secondary_cluster" { type = bool }
 variable "server_name" { type = list(string) }
+variable "consul_mode" { type = bool }
+variable "consul_version" { type = string }

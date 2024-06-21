@@ -10,6 +10,7 @@ module "security" {
   source               = "./security"
   network_vpc_id       = module.network.vpc_id
   create_load_balancer = var.create_load_balancer
+  consul_mode          = var.consul_mode
 }
 module "servers" {
   source                   = "./servers"
@@ -31,6 +32,8 @@ module "servers" {
   max_size                 = var.max_size
   min_size                 = var.min_size
   server_name              = var.server_name
+  consul_mode              = var.consul_mode
+  consul_version           = var.consul_version
 }
 module "kms" {
   source                  = "./kms"
@@ -55,4 +58,21 @@ module "load_balancer" {
   listener_port                   = var.listener_port
   listener_protocol               = var.listener_protocol
   server_name                     = var.server_name
+}
+module "consul" {
+  source                   = "./consul"
+  most_recent_ami          = var.most_recent_ami
+  ami_owners               = var.ami_owners
+  ami_name_filters         = var.ami_name_filters
+  instance_type            = var.instance_type
+  ec2_key_pair_name        = var.ec2_key_pair_name
+  desired_capacity         = var.desired_capacity
+  max_size                 = var.max_size
+  min_size                 = var.min_size
+  consul_version           = var.consul_version
+  server_name              = var.server_name
+  vpc_zone_identifier      = module.network.subnets
+  network_vpc_id           = module.network.vpc_id
+  consul_mode              = var.consul_mode
+  consul_security_group_id = module.security.security_group_id
 }

@@ -138,3 +138,11 @@ variable "server_name" {
   type    = list(string)
   default = ["primary", "secondary"]
 }
+variable "consul_mode" {
+  type    = bool
+  default = false
+}
+variable "consul_version" {
+  type    = string
+  default = "1.19.0"
+}

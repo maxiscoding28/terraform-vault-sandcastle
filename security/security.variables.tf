@@ -16,3 +16,6 @@ variable "load_balancer_port" {
 variable "create_load_balancer" {
   type = bool
 }
+variable "consul_mode" {
+  type = bool
+}

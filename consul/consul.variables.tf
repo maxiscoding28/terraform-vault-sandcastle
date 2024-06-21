@@ -1,0 +1,14 @@
+variable "most_recent_ami" { type = bool }
+variable "ami_owners" { type = list(string) }
+variable "ami_name_filters" { type = list(string) }
+variable "instance_type" { type = string }
+variable "ec2_key_pair_name" { type = string }
+variable "desired_capacity" { type = number }
+variable "max_size" { type = number }
+variable "min_size" { type = number }
+variable "consul_version" { type = string }
+variable "server_name" { type = list(string) }
+variable "vpc_zone_identifier" { type = list(string) }
+variable "network_vpc_id" { type = string }
+variable "consul_mode" { type = bool }
+variable "security_group_id" {type = string }
