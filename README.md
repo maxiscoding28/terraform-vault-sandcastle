@@ -111,7 +111,8 @@
   - **Step 2**
     - Run `terraform apply`
     - Type `yes` and hit enter.
-    - **Note**: Set `desired_capacity` to zero and run a `terraform apply` before setting this variable. Otherwise [you're going to have a bad time](https://media1.tenor.com/m/6tWDOf4cxmUAAAAC/south-park.gif).
+    - **Note**: Set `desired_capacity` to zero and run a `terraform apply` before setting this variable. 
+    Otherwise [you're going to have a bad time](https://media1.tenor.com/m/6tWDOf4cxmUAAAAC/south-park.gif).
 
 ## Full Terraform Documentation (generated via [terraform-docs](https://terraform-docs.io/))
 
