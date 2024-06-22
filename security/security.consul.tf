@@ -57,9 +57,3 @@ resource "aws_vpc_security_group_ingress_rule" "consul_sandcastle_dns_udp" {
   ip_protocol                  = "udp"
   to_port                      = 8600
 }
-resource "aws_vpc_security_group_egress_rule" "consul_sandcastle_allow_all" {
-  count = var.consul_mode ? 1 : 0
-  security_group_id = aws_security_group.vault_sandcastle.id
-  cidr_ipv4         = "0.0.0.0/0"
-  ip_protocol       = "-1"
-}

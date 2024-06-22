@@ -100,6 +100,19 @@
   - **Step 2**
     - Run `terraform apply`
     - Type `yes` and hit enter.
+    - **Note**: Set `desired_capacity` to zero and run a `terraform apply` before setting this variable. Otherwise [you're going to have a bad time](https://media1.tenor.com/m/6tWDOf4cxmUAAAAC/south-park.gif).
+
+
+## Consul Mode
+  - **Step 1**
+    - Add a variable called `consul_mode` in your `terraform.tfvars` file and set it to `true`.
+      - **terraform.tfvars**
+        ```
+        consul_mode = true
+        ```
+  - **Step 2**
+    - Run `terraform apply`
+    - Type `yes` and hit enter.
 
 ## Full Terraform Documentation (generated via [terraform-docs](https://terraform-docs.io/))
 
@@ -107,12 +120,17 @@
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_consul"></a> [consul](#module\_consul) | ./consul | n/a |
 | <a name="module_iam"></a> [iam](#module\_iam) | ./iam | n/a |
 | <a name="module_kms"></a> [kms](#module\_kms) | ./kms | n/a |
 | <a name="module_load_balancer"></a> [load\_balancer](#module\_load\_balancer) | ./load_balancer | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./network | n/a |
 | <a name="module_security"></a> [security](#module\_security) | ./security | n/a |
 | <a name="module_servers"></a> [servers](#module\_servers) | ./servers | n/a |
+
+## Resources
+
+No resources.
 
 ## Inputs
 
@@ -121,6 +139,8 @@
 | <a name="input_ami_name_filters"></a> [ami\_name\_filters](#input\_ami\_name\_filters) | n/a | `list(string)` | <pre>[<br>  "al2023-ami-2023.4.20240611.0-kernel-6.1-x86_64"<br>]</pre> | no |
 | <a name="input_ami_owners"></a> [ami\_owners](#input\_ami\_owners) | n/a | `list(string)` | <pre>[<br>  "amazon"<br>]</pre> | no |
 | <a name="input_bootstrap_vault"></a> [bootstrap\_vault](#input\_bootstrap\_vault) | n/a | `bool` | `true` | no |
+| <a name="input_consul_mode"></a> [consul\_mode](#input\_consul\_mode) | n/a | `bool` | `false` | no |
+| <a name="input_consul_version"></a> [consul\_version](#input\_consul\_version) | n/a | `string` | `"1.19.0"` | no |
 | <a name="input_create_load_balancer"></a> [create\_load\_balancer](#input\_create\_load\_balancer) | n/a | `bool` | `false` | no |
 | <a name="input_create_secondary_cluster"></a> [create\_secondary\_cluster](#input\_create\_secondary\_cluster) | n/a | `bool` | `false` | no |
 | <a name="input_deletion_window_in_days"></a> [deletion\_window\_in\_days](#input\_deletion\_window\_in\_days) | n/a | `number` | `7` | no |
@@ -153,7 +173,3 @@
 | <a name="input_vault_version"></a> [vault\_version](#input\_vault\_version) | n/a | `string` | `"1.16.0"` | no |
 | <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | n/a | `string` | `"10.0.0.0/16"` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `string` | `""` | no |
-
-## Outputs
-
-No outputs.

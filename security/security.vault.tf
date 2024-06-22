@@ -1,6 +1,9 @@
 resource "aws_security_group" "vault_sandcastle" {
   vpc_id = var.network_vpc_id
 }
+data "http" "get_local_ip" {
+  url = "https://ipv4.icanhazip.com"
+}
 resource "aws_vpc_security_group_ingress_rule" "vault_sandcastle_ssh" {
   depends_on        = [data.http.get_local_ip]
   security_group_id = aws_security_group.vault_sandcastle.id

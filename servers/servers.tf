@@ -6,7 +6,7 @@ data "aws_ami" "vault_sandcastle" {
     values = var.ami_name_filters
   }
 }
-resource "aws_launch_template" "vault_sandcastle" {
+resource "aws_launch_template" "vault_sandcastle" { 
   count                  = var.create_secondary_cluster ? 2 : 1
   image_id               = data.aws_ami.vault_sandcastle.id
   instance_type          = var.instance_type

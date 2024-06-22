@@ -11,4 +11,4 @@ variable "server_name" { type = list(string) }
 variable "vpc_zone_identifier" { type = list(string) }
 variable "network_vpc_id" { type = string }
 variable "consul_mode" { type = bool }
-variable "security_group_id" {type = string }
+variable "security_group_id" { type = string }
