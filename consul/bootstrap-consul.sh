@@ -34,12 +34,12 @@ rm -f /tmp/consul.zip
 cat > /etc/consul.d/server.hcl << EOF
 log_level  = "info"
 server     = true
-datacenter = "consul-primary"
+datacenter = "consul-${server_name}"
 data_dir           = "/opt/consul/data"
 client_addr    = "0.0.0.0"
 bootstrap_expect = ${desired_capacity}  
 ui_config { enabled = true }
-retry_join = ["provider=aws tag_key=join tag_value=consul-primary"]
+retry_join = ["provider=aws tag_key=join tag_value=consul-${server_name}"]
 EOF
 
 # Create Systemd

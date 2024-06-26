@@ -70,7 +70,7 @@ resource "aws_iam_instance_profile" "consul_sandcastle" {
 }
 
 resource "aws_launch_template" "consul_sandcastle" {
-  count                  = var.consul_mode ? 1 : 0
+  count                  = var.consul_mode && var.create_secondary_cluster ? 2 : var.consul_mode ? 1 : 0
   image_id               = data.aws_ami.consul_sandcastle[0].id
   instance_type          = var.instance_type
   key_name               = var.ec2_key_pair_name
@@ -78,12 +78,13 @@ resource "aws_launch_template" "consul_sandcastle" {
   user_data = base64encode(templatefile("${path.module}/bootstrap-consul.sh", {
     consul_version   = var.consul_version
     desired_capacity = var.desired_capacity
+    server_name      = var.server_name[count.index]
   }))
   iam_instance_profile { name = aws_iam_instance_profile.consul_sandcastle[0].id }
 
 }
 resource "aws_autoscaling_group" "consul_sandcastle" {
-  count               = var.consul_mode ? 1 : 0
+  count               = var.consul_mode && var.create_secondary_cluster ? 2 : var.consul_mode ? 1 : 0
   desired_capacity    = var.desired_capacity
   max_size            = var.max_size
   min_size            = var.min_size
@@ -94,12 +95,12 @@ resource "aws_autoscaling_group" "consul_sandcastle" {
   }
   tag {
     key                 = "Name"
-    value               = "consul-sandcastle"
+    value               = "consul_sandcastle"
     propagate_at_launch = true
   }
   tag {
     key                 = "join"
-    value               = "consul-primary"
+    value               = "consul-${var.server_name[count.index]}"
     propagate_at_launch = true
   }
 }
