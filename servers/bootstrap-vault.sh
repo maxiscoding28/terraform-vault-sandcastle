@@ -23,15 +23,13 @@ rm -f /tmp/vault.zip
 
 # Create raft directory
 mkdir /opt/vault/
-chown vault:vault /opt/vault
+chown -R vault:vault /opt/vault
 
 # Create config
 mkdir /etc/vault.d
-chown vault:vault /opt/vault
-
 # Create license file
 echo ${vault_license} > /etc/vault.d/license.hclic
-
+# Create vault config
 cat > /etc/vault.d/server.hcl << EOF
 listener "tcp" {
     address = "0.0.0.0:8200"
@@ -51,12 +49,28 @@ seal "awskms" {
 
 api_addr = "http://{{ GetPrivateInterfaces | attr \"address\" }}:8200"
 cluster_addr = "http://{{ GetPrivateInterfaces | attr \"address\" }}:8201"
+cluster_name = "${server_name}"
 
 log_level = "debug"
 raw_storage_endpoint = true
 ui = true
 license_path = "/etc/vault.d/license.hclic"
 EOF
+# Create Replication Runbook if variable is set
+if [ ${create_replication_runbook} ]; then
+cat > /etc/vault.d/replication-runbook.sh << EOF
+  # DR Replication
+  ## Primary
+  vault write -f sys/replication/dr/primary/enable
+  vault write -f /sys/replication/dr/primary/secondary-token id=primary
+
+  ## Secondary
+  vault write sys/replication/dr/secondary/enable token=
+EOF
+fi
+# Grant Vault ownership to config directory
+chown -R vault:vault /etc/vault.d
+
 
 # Create Systemd file
 cat > /etc/systemd/system/vault.service << EOF
@@ -99,6 +113,18 @@ EOF
 # Change Vault ADDR to non-TLS
 cat > /etc/profile.d/vault-settings.sh << EOF
 export VAULT_ADDR=http://127.0.0.1:8200
+alias vinit="vault operator init -format=json -recovery-shares=1 -recovery-threshold=1 > /home/vault/init.json"
+alias vrt="[ -f /home/vault/init.json ] && cat /home/vault/init.json | jq -r '.root_token' | vault login - || echo \"/home/vault/init.json file not found\""
+alias vl="journalctl -u vault --no-pager -f"
+alias pc="cat /etc/vault.d/server.hcl"
+alias vc="vim /etc/vault.d/server.hcl"
+alias vstr="sudo systemctl start vault"
+alias vstp="sudo systemctl stop vault"
+alias vstat="sudo systemctl status vault"
+alias vst="vault status"
+alias vclr="sudo rm -rf /opt/vault/*"
+alias vdr="watch vault read sys/replication/dr/status -format=json"
+alias vpr="watch vault read sys/replication/performance/status -format=json"
 EOF
 
 # Start Vault

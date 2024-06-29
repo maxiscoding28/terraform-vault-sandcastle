@@ -49,7 +49,7 @@ chown consul:consul /opt/consul/data
 
 # Create vault config
 mkdir /etc/vault.d
-chown vault:vault /opt/vault
+chown vault:vault /etc/vault.d
 
 # Create consul config
 mkdir /etc/consul.d
@@ -83,10 +83,10 @@ EOF
 
 cat > /etc/consul.d/agent.hcl << EOF
   server     = false
-  datacenter = "consul-primary"
+  datacenter = "consul-${server_name}"
   data_dir   = "/opt/consul/data"
   log_level  = "debug"
-  retry_join = ["provider=aws tag_key=Name tag_value=consul-sandcastle"]
+  retry_join = ["provider=aws tag_key=join tag_value=consul-${server_name}"]
   client_addr    = "0.0.0.0"
 EOF
 

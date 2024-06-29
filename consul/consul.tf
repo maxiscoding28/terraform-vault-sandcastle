@@ -90,12 +90,12 @@ resource "aws_autoscaling_group" "consul_sandcastle" {
   min_size            = var.min_size
   vpc_zone_identifier = var.vpc_zone_identifier
   launch_template {
-    id      = aws_launch_template.consul_sandcastle[0].id
+    id      = aws_launch_template.consul_sandcastle[count.index].id
     version = "$Latest"
   }
   tag {
     key                 = "Name"
-    value               = "consul_sandcastle"
+    value               = "consul_sandcastle_${var.server_name[count.index]}"
     propagate_at_launch = true
   }
   tag {

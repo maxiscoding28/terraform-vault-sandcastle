@@ -37,7 +37,7 @@ server     = true
 datacenter = "consul-${server_name}"
 data_dir           = "/opt/consul/data"
 client_addr    = "0.0.0.0"
-bootstrap_expect = ${desired_capacity}  
+bootstrap_expect = ${desired_capacity} 
 ui_config { enabled = true }
 retry_join = ["provider=aws tag_key=join tag_value=consul-${server_name}"]
 EOF

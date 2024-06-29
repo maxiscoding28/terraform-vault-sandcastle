@@ -11,6 +11,7 @@ resource "aws_lb_target_group" "vault_sandcastle" {
   port     = var.target_group_port
   protocol = var.load_balancer_type == "application" ? "HTTP" : var.load_balancer_type == "network" ? "TCP" : var.listener_protocol
   vpc_id   = var.vpc_id
+  deregistration_delay = 0
   health_check {
     path    = var.target_group_health_check_path
     matcher = var.target_group_health_check_codes
