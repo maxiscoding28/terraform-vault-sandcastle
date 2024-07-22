@@ -18,4 +18,3 @@ variable "create_secondary_cluster" { type = bool }
 variable "server_name" { type = list(string) }
 variable "consul_mode" { type = bool }
 variable "consul_version" { type = string }
-variable "create_replication_runbook" { type = string }

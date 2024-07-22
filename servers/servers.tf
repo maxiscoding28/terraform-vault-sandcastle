@@ -17,7 +17,6 @@ resource "aws_launch_template" "vault_sandcastle" {
     vault_version              = var.vault_version
     vault_license              = var.vault_license
     kms_key_arn                = var.kms_key_arn
-    create_replication_runbook = var.create_replication_runbook
     server_name                = var.server_name[count.index]
     })) : var.bootstrap_vault && var.consul_mode ? base64encode(templatefile("${path.module}/bootstrap-vault-consul.sh", {
     vault_version              = var.vault_version
@@ -25,7 +24,6 @@ resource "aws_launch_template" "vault_sandcastle" {
     kms_key_arn                = var.kms_key_arn
     server_name                = var.server_name[count.index]
     consul_version             = var.consul_version
-    create_replication_runbook = var.create_replication_runbook
 
   })) : null
 }

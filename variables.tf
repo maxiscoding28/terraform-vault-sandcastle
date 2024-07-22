@@ -146,7 +146,3 @@ variable "consul_version" {
   type    = string
   default = "1.19.0"
 }
-variable "create_replication_runbook" {
-  type    = bool
-  default = false
-}

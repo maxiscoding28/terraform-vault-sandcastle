@@ -34,7 +34,6 @@ module "servers" {
   server_name                = var.server_name
   consul_mode                = var.consul_mode
   consul_version             = var.consul_version
-  create_replication_runbook = var.create_replication_runbook
 }
 module "kms" {
   source                  = "./kms"

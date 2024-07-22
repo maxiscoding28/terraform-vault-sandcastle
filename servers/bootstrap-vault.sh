@@ -56,18 +56,6 @@ raw_storage_endpoint = true
 ui = true
 license_path = "/etc/vault.d/license.hclic"
 EOF
-# Create Replication Runbook if variable is set
-if [ ${create_replication_runbook} ]; then
-cat > /etc/vault.d/replication-runbook.sh << EOF
-  # DR Replication
-  ## Primary
-  vault write -f sys/replication/dr/primary/enable
-  vault write -f /sys/replication/dr/primary/secondary-token id=primary
-
-  ## Secondary
-  vault write sys/replication/dr/secondary/enable token=
-EOF
-fi
 # Grant Vault ownership to config directory
 chown -R vault:vault /etc/vault.d
 
