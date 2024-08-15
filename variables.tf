@@ -139,8 +139,12 @@ variable "server_name" {
   default = ["primary", "secondary"]
 }
 variable "consul_mode" {
-  type    = bool
-  default = false
+  type    = string
+  default = "none"
+  validation {
+    condition     = var.consul_mode == "none" || var.consul_mode == "primary" || var.consul_mode == "secondary" || var.consul_mode == "both"
+    error_message = "The consul_mode value must be one of: none, primary, or secondary."
+  }
 }
 variable "consul_version" {
   type    = string

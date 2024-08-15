@@ -150,9 +150,20 @@ LimitNOFILE=65536
 WantedBy=multi-user.target
 EOF
 
-# Change Vault ADDR to non-TLS
 cat > /etc/profile.d/vault-settings.sh << EOF
-export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_ADDR="http://127.0.0.1:8200"
+alias vinit="vault operator init -format=json -recovery-shares=1 -recovery-threshold=1 > /home/vault/init.json"
+alias vrt="[ -f /home/vault/init.json ] && cat /home/vault/init.json | jq -r '.root_token' | vault login - || echo \"/home/vault/init.json file not found\""
+alias vl="journalctl -u vault --no-pager -f"
+alias pc="cat /etc/vault.d/server.hcl"
+alias vc="vim /etc/vault.d/server.hcl"
+alias vstr="sudo systemctl start vault"
+alias vstp="sudo systemctl stop vault"
+alias vstat="sudo systemctl status vault"
+alias vst="vault status"
+alias vclr="sudo rm -rf /opt/vault/*"
+alias vdr="watch vault read sys/replication/dr/status -format=json"
+alias vpr="watch vault read sys/replication/performance/status -format=json"
 EOF
 
 # Start Vault

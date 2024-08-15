@@ -17,5 +17,5 @@ variable "create_load_balancer" {
   type = bool
 }
 variable "consul_mode" {
-  type = bool
+  type = string
 }
